@@ -11,9 +11,11 @@
           <el-icon><Clock /></el-icon>
         </div>
         <div class="stat-content">
-          <div class="stat-value">8h 30m</div>
+          <div class="stat-value">{{ formatHours(dashboardData.stats.today_hours) }}</div>
           <div class="stat-label">今日工时</div>
-          <div class="stat-status working">🕐 正在工作</div>
+          <div class="stat-status" :class="getStatusClass(dashboardData.stats.today_status)">
+            {{ getStatusText(dashboardData.stats.today_status) }}
+          </div>
         </div>
       </div>
 
@@ -22,9 +24,9 @@
           <el-icon><Calendar /></el-icon>
         </div>
         <div class="stat-content">
-          <div class="stat-value">42h 15m</div>
+          <div class="stat-value">{{ formatHours(dashboardData.stats.week_hours) }}</div>
           <div class="stat-label">本周工时</div>
-          <div class="stat-status positive">📊 +5.2%</div>
+          <div class="stat-status positive">📊 {{ dashboardData.stats.week_change }}</div>
         </div>
       </div>
 
@@ -33,9 +35,9 @@
           <el-icon><Calendar /></el-icon>
         </div>
         <div class="stat-content">
-          <div class="stat-value">168h 45m</div>
+          <div class="stat-value">{{ formatHours(dashboardData.stats.month_hours) }}</div>
           <div class="stat-label">本月工时</div>
-          <div class="stat-status positive">📈 +12.8%</div>
+          <div class="stat-status positive">📈 {{ dashboardData.stats.month_change }}</div>
         </div>
       </div>
 
@@ -44,9 +46,11 @@
           <el-icon><TrendCharts /></el-icon>
         </div>
         <div class="stat-content">
-          <div class="stat-value">8h 15m</div>
+          <div class="stat-value">{{ formatHours(dashboardData.stats.avg_hours) }}</div>
           <div class="stat-label">平均工时</div>
-          <div class="stat-status stable">📊 稳定</div>
+          <div class="stat-status" :class="getStatusClass(dashboardData.stats.avg_status)">
+            {{ getStatusText(dashboardData.stats.avg_status) }}
+          </div>
         </div>
       </div>
 
@@ -55,9 +59,11 @@
           <el-icon><Clock /></el-icon>
         </div>
         <div class="stat-content">
-          <div class="stat-value">25h 30m</div>
+          <div class="stat-value">{{ formatHours(dashboardData.stats.month_overtime) }}</div>
           <div class="stat-label">本月加班</div>
-          <div class="stat-status warning">⚠️ 偏高</div>
+          <div class="stat-status" :class="getStatusClass(dashboardData.stats.month_overtime_status)">
+            {{ getStatusText(dashboardData.stats.month_overtime_status) }}
+          </div>
         </div>
       </div>
 
@@ -66,9 +72,9 @@
           <el-icon><Timer /></el-icon>
         </div>
         <div class="stat-content">
-          <div class="stat-value">18h 45m</div>
+          <div class="stat-value">{{ formatHours(dashboardData.stats.last_month_overtime) }}</div>
           <div class="stat-label">上月加班</div>
-          <div class="stat-status positive">📉 -27%</div>
+          <div class="stat-status positive">📉 {{ dashboardData.stats.overtime_change }}</div>
         </div>
       </div>
     </div>
@@ -79,22 +85,20 @@
         <h3>每日工时柱状图</h3>
         <div class="chart-placeholder bar-chart">
           <div class="bar-container">
-            <div class="bar" style="height: 60%;" data-value="7.5h" data-hours="7.5"></div>
-            <div class="bar overtime" style="height: 82%;" data-value="8.2h" data-hours="8.2"></div>
-            <div class="bar" style="height: 70%;" data-value="7.8h" data-hours="7.8"></div>
-            <div class="bar overtime" style="height: 90%;" data-value="8.5h" data-hours="8.5"></div>
-            <div class="bar" style="height: 80%;" data-value="8.0h" data-hours="8.0"></div>
-            <div class="bar overtime" style="height: 85%;" data-value="8.3h" data-hours="8.3"></div>
-            <div class="bar" style="height: 65%;" data-value="7.2h" data-hours="7.2"></div>
+            <div
+              v-for="(item, index) in dashboardData.charts.bar_chart"
+              :key="index"
+              class="bar"
+              :class="{ overtime: item.is_overtime }"
+              :style="{ height: Math.max(item.hours / 10 * 100, 5) + '%' }"
+              :data-value="formatHours(item.hours)"
+              :data-hours="item.hours"
+            ></div>
           </div>
           <div class="chart-labels">
-            <span>周一</span>
-            <span>周二</span>
-            <span>周三</span>
-            <span>周四</span>
-            <span>周五</span>
-            <span>周六</span>
-            <span>周日</span>
+            <span v-for="(item, index) in dashboardData.charts.bar_chart" :key="index">
+              {{ item.day_name }}
+            </span>
           </div>
         </div>
       </div>
@@ -104,21 +108,16 @@
           <div class="pie-segment"></div>
         </div>
         <div class="pie-legend">
-          <div class="legend-item">
-            <span class="legend-color" style="background: #409EFF;"></span>
-            <span>8-9小时 (45%)</span>
-          </div>
-          <div class="legend-item">
-            <span class="legend-color" style="background: #67C23A;"></span>
-            <span>7-8小时 (25%)</span>
-          </div>
-          <div class="legend-item">
-            <span class="legend-color" style="background: #E6A23C;"></span>
-            <span>9-10小时 (20%)</span>
-          </div>
-          <div class="legend-item">
-            <span class="legend-color" style="background: #F56C6C;"></span>
-            <span>其他 (10%)</span>
+          <div
+            v-for="(item, index) in dashboardData.charts.pie_chart"
+            :key="index"
+            class="legend-item"
+          >
+            <span
+              class="legend-color"
+              :style="{ background: ['#409EFF', '#67C23A', '#E6A23C', '#F56C6C'][index] }"
+            ></span>
+            <span>{{ item.label }} ({{ item.percentage }}%)</span>
           </div>
         </div>
       </div>
@@ -153,27 +152,27 @@
       <div class="analysis-grid">
         <div class="analysis-item">
           <span class="analysis-label">最常见上班时间:</span>
-          <span class="analysis-value">09:00 (占比 68%)</span>
+          <span class="analysis-value">{{ dashboardData.analysis.most_common_start_time }}</span>
         </div>
         <div class="analysis-item">
           <span class="analysis-label">最常见下班时间:</span>
-          <span class="analysis-value">18:30 (占比 45%)</span>
+          <span class="analysis-value">{{ dashboardData.analysis.most_common_end_time }}</span>
         </div>
         <div class="analysis-item">
           <span class="analysis-label">平均午休时长:</span>
-          <span class="analysis-value">1小时15分钟</span>
+          <span class="analysis-value">{{ dashboardData.analysis.avg_break_duration }}</span>
         </div>
         <div class="analysis-item">
           <span class="analysis-label">加班频率:</span>
-          <span class="analysis-value">15% (超过9小时的工作日)</span>
+          <span class="analysis-value">{{ dashboardData.analysis.overtime_frequency }}</span>
         </div>
         <div class="analysis-item">
           <span class="analysis-label">工作效率最高时段:</span>
-          <span class="analysis-value">上午 10:00-12:00</span>
+          <span class="analysis-value">{{ dashboardData.analysis.peak_efficiency_time }}</span>
         </div>
         <div class="analysis-item">
           <span class="analysis-label">平均通勤时间:</span>
-          <span class="analysis-value">45分钟</span>
+          <span class="analysis-value">{{ dashboardData.analysis.avg_commute_time }}</span>
         </div>
       </div>
     </div>
@@ -184,32 +183,16 @@
         <h2>今日时间轴</h2>
       </div>
       <div class="timeline">
-        <div class="timeline-item">
-          <div class="timeline-time">09:00</div>
-          <div class="timeline-dot"></div>
+        <div
+          v-for="(item, index) in dashboardData.timeline"
+          :key="index"
+          class="timeline-item"
+          :class="{ current: item.is_current }"
+        >
+          <div class="timeline-time">{{ item.time }}</div>
+          <div class="timeline-dot" :class="{ current: item.is_current }"></div>
           <div class="timeline-content">
-            <div class="timeline-title">上班打卡</div>
-          </div>
-        </div>
-        <div class="timeline-item">
-          <div class="timeline-time">12:00</div>
-          <div class="timeline-dot"></div>
-          <div class="timeline-content">
-            <div class="timeline-title">午休开始</div>
-          </div>
-        </div>
-        <div class="timeline-item">
-          <div class="timeline-time">13:00</div>
-          <div class="timeline-dot"></div>
-          <div class="timeline-content">
-            <div class="timeline-title">午休结束</div>
-          </div>
-        </div>
-        <div class="timeline-item current">
-          <div class="timeline-time">15:30</div>
-          <div class="timeline-dot current"></div>
-          <div class="timeline-content">
-            <div class="timeline-title">当前时间</div>
+            <div class="timeline-title">{{ item.title }}</div>
           </div>
         </div>
       </div>
@@ -218,7 +201,124 @@
 </template>
 
 <script setup>
+import { ref, onMounted } from 'vue'
 import { Clock, Calendar, TrendCharts, DataAnalysis, Bell, Setting, Timer } from '@element-plus/icons-vue'
+import { statisticsApi } from '@/api/statistics'
+import { ElMessage } from 'element-plus'
+
+// 响应式数据
+const loading = ref(false)
+const dashboardData = ref({
+  stats: {
+    today_hours: 0,
+    today_status: 'no_record',
+    week_hours: 0,
+    week_change: '+0%',
+    month_hours: 0,
+    month_change: '+0%',
+    avg_hours: 0,
+    avg_status: 'stable',
+    month_overtime: 0,
+    month_overtime_status: 'normal',
+    last_month_overtime: 0,
+    overtime_change: '+0%'
+  },
+  charts: {
+    bar_chart: [],
+    pie_chart: []
+  },
+  analysis: {
+    most_common_start_time: "09:00 (占比 68%)",
+    most_common_end_time: "18:30 (占比 45%)",
+    avg_break_duration: "1小时15分钟",
+    overtime_frequency: "15% (超过9小时的工作日)",
+    peak_efficiency_time: "上午 10:00-12:00",
+    avg_commute_time: "45分钟"
+  },
+  timeline: [
+    { time: "09:00", title: "上班打卡", is_current: false },
+    { time: "12:00", title: "午休开始", is_current: false },
+    { time: "13:00", title: "午休结束", is_current: false },
+    { time: "15:30", title: "当前时间", is_current: true }
+  ]
+})
+
+// 格式化工时显示
+const formatHours = (hours) => {
+  const h = Math.floor(hours)
+  const m = Math.round((hours - h) * 60)
+  return `${h}h ${m}m`
+}
+
+// 获取状态显示文本
+const getStatusText = (status) => {
+  const statusMap = {
+    'working': '🕐 正在工作',
+    'no_record': '📊 无记录',
+    'stable': '📊 稳定',
+    'warning': '⚠️ 偏高',
+    'normal': '📉 正常'
+  }
+  return statusMap[status] || status
+}
+
+// 获取状态样式类
+const getStatusClass = (status) => {
+  const classMap = {
+    'working': 'working',
+    'stable': 'stable',
+    'warning': 'warning',
+    'normal': 'positive'
+  }
+  return classMap[status] || 'stable'
+}
+
+// 加载仪表板数据
+const loadDashboardData = async () => {
+  loading.value = true
+  try {
+    // 先使用测试API
+    const response = await statisticsApi.getDashboardOverview()
+    if (response.success) {
+      const data = response.data
+
+      // 更新统计数据
+      dashboardData.value.stats.today_hours = data.today?.hours || 0
+      dashboardData.value.stats.today_status = data.today?.status === 'normal' ? 'working' : 'no_record'
+      dashboardData.value.stats.week_hours = data.this_week?.total_hours || 0
+      dashboardData.value.stats.month_hours = data.this_month?.total_hours || 0
+      dashboardData.value.stats.avg_hours = data.this_week?.avg_daily_hours || 0
+
+      // 生成图表数据
+      if (data.recent_trend) {
+        dashboardData.value.charts.bar_chart = data.recent_trend.map((item, index) => ({
+          date: item.date,
+          hours: item.hours,
+          is_overtime: item.hours > 8,
+          day_name: ["周一", "周二", "周三", "周四", "周五", "周六", "周日"][index % 7]
+        }))
+      }
+
+      // 生成饼图数据（模拟）
+      dashboardData.value.charts.pie_chart = [
+        { label: "8-9小时", value: 10, percentage: 45 },
+        { label: "7-8小时", value: 5, percentage: 25 },
+        { label: "9-10小时", value: 4, percentage: 20 },
+        { label: "其他", value: 2, percentage: 10 }
+      ]
+    }
+  } catch (error) {
+    console.error('加载仪表板数据失败:', error)
+    ElMessage.error('加载数据失败，请稍后重试')
+  } finally {
+    loading.value = false
+  }
+}
+
+// 组件挂载时加载数据
+onMounted(() => {
+  loadDashboardData()
+})
 </script>
 
 <style lang="scss" scoped>

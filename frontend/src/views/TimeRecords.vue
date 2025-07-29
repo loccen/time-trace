@@ -59,7 +59,7 @@
     <!-- 表格视图 -->
     <div v-show="currentView === 'table'" class="table-view">
       <div class="table-section">
-        <el-table :data="tableData" style="width: 100%">
+        <el-table :data="tableData" style="width: 100%" v-loading="loading">
           <el-table-column prop="date" label="日期" width="120" />
           <el-table-column prop="clockIn" label="上班时间" width="120" />
           <el-table-column prop="clockOut" label="下班时间" width="120" />
@@ -162,64 +162,72 @@ import {
 } from '@element-plus/icons-vue'
 import { ElMessage } from 'element-plus'
 import dayjs from 'dayjs'
+import { timeRecordApi } from '@/api/timeRecord'
 
 // 响应式数据
 const currentView = ref('table')
-const dateRange = ref(['2024-01-01', '2024-01-31'])
+const dateRange = ref([dayjs().subtract(30, 'day').format('YYYY-MM-DD'), dayjs().format('YYYY-MM-DD')])
 const statusFilter = ref('')
 const currentPage = ref(1)
 const pageSize = ref(20)
-const total = ref(100)
+const total = ref(0)
 const currentMonth = ref(dayjs())
+const loading = ref(false)
 
 // 表格数据
-const tableData = ref([
-  {
-    date: '2024-01-15',
-    clockIn: '09:00:00',
-    clockOut: '18:30:00',
-    workHours: '7h 30m',
-    idleTime: '45m',
-    meetingTime: '1h 15m',
-    status: 'normal'
-  },
-  {
-    date: '2024-01-14',
-    clockIn: '09:15:00',
-    clockOut: '18:00:00',
-    workHours: '7h 00m',
-    idleTime: '30m',
-    meetingTime: '45m',
-    status: 'normal'
-  },
-  {
-    date: '2024-01-13',
-    clockIn: '09:00:00',
-    clockOut: '--:--:--',
-    workHours: '--',
-    idleTime: '--',
-    meetingTime: '--',
-    status: 'abnormal'
-  },
-  {
-    date: '2024-01-12',
-    clockIn: '09:30:00',
-    clockOut: '19:00:00',
-    workHours: '8h 00m',
-    idleTime: '1h 00m',
-    meetingTime: '30m',
-    status: 'manual'
-  },
-  {
-    date: '2024-01-11',
-    clockIn: '08:45:00',
-    clockOut: '17:30:00',
-    workHours: '7h 15m',
-    idleTime: '20m',
-    meetingTime: '1h 10m',
-    status: 'normal'
+const tableData = ref([])
+
+// 格式化工时显示
+const formatDuration = (minutes) => {
+  if (!minutes || minutes === 0) return '--'
+  const hours = Math.floor(minutes / 60)
+  const mins = minutes % 60
+  return `${hours}h ${mins}m`
+}
+
+// 格式化时间显示
+const formatTime = (datetime) => {
+  if (!datetime) return '--:--:--'
+  return dayjs(datetime).format('HH:mm:ss')
+}
+
+// 加载工时记录数据
+const loadTimeRecords = async () => {
+  loading.value = true
+  try {
+    const params = {
+      start_date: dateRange.value[0],
+      end_date: dateRange.value[1],
+      status: statusFilter.value || undefined,
+      page: currentPage.value,
+      size: pageSize.value
+    }
+
+    const response = await timeRecordApi.getTimeRecords(params)
+    if (response.success) {
+      const data = response.data
+
+      // 转换数据格式
+      tableData.value = data.items.map(record => ({
+        id: record.id,
+        date: record.date,
+        clockIn: formatTime(record.clock_in),
+        clockOut: formatTime(record.clock_out),
+        workHours: formatDuration(record.duration),
+        idleTime: formatDuration(record.break_duration),
+        meetingTime: '--', // 暂时没有会议时间数据
+        status: record.status
+      }))
+
+      total.value = data.total
+    }
+  } catch (error) {
+    console.error('加载工时记录失败:', error)
+    ElMessage.error('加载数据失败，请稍后重试')
+  } finally {
+    loading.value = false
   }
-])
+}
 
 // 计算属性
 const currentMonthText = computed(() => {
@@ -282,7 +290,8 @@ const handleExport = () => {
 }
 
 const handleSearch = () => {
-  ElMessage.info('搜索功能开发中')
+  currentPage.value = 1
+  loadTimeRecords()
 }
 
 const handleEdit = (row) => {
@@ -295,12 +304,13 @@ const handleTag = (row) => {
 
 const handleSizeChange = (size) => {
   pageSize.value = size
-  ElMessage.info(`每页显示 ${size} 条`)
+  currentPage.value = 1
+  loadTimeRecords()
 }
 
 const handleCurrentChange = (page) => {
   currentPage.value = page
-  ElMessage.info(`当前页: ${page}`)
+  loadTimeRecords()
 }
 
 const prevMonth = () => {
@@ -312,7 +322,7 @@ const nextMonth = () => {
 }
 
 onMounted(() => {
-  // 初始化数据
+  loadTimeRecords()
 })
 </script>
 

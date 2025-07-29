@@ -1,7 +1,8 @@
 """
 基础模型和枚举定义
 """
-from datetime import datetime, date, time
+from datetime import datetime, date
+from datetime import time as time_type
 from typing import Optional
 from enum import Enum
 from pydantic import BaseModel, Field
@@ -51,12 +52,12 @@ class BreakType(str, Enum):
 
 class BaseTimestampModel(BaseModel):
     """带时间戳的基础模型"""
-    created_at: Optional[datetime] = Field(None, description="创建时间")
-    updated_at: Optional[datetime] = Field(None, description="更新时间")
+    created_at: Optional[datetime] = None
+    updated_at: Optional[datetime] = None
 
 
 class BaseResponseModel(BaseModel):
     """基础响应模型"""
-    success: bool = Field(..., description="是否成功")
-    message: str = Field(..., description="响应消息")
-    timestamp: datetime = Field(default_factory=datetime.now, description="响应时间")
+    success: bool
+    message: str
+    timestamp: datetime = Field(default_factory=datetime.now)

@@ -50,4 +50,7 @@ declare module 'vue' {
     SidebarItem: typeof import('./src/components/Sidebar/SidebarItem.vue')['default']
     SizeSelect: typeof import('./src/components/SizeSelect/index.vue')['default']
   }
+  export interface ComponentCustomProperties {
+    vLoading: typeof import('element-plus/es')['ElLoadingDirective']
+  }
 }
