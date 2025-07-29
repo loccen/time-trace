@@ -1,0 +1,626 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>时迹 (TimeTrace) - UI原型</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <!-- 顶部导航栏 -->
+    <header class="header">
+        <div class="header-content">
+            <div class="header-left">
+                <div class="logo">
+                    <i class="fas fa-clock"></i>
+                    <span>时迹</span>
+                </div>
+                <nav class="nav">
+                    <a href="#dashboard" class="nav-item active" data-page="dashboard">
+                        <i class="fas fa-tachometer-alt"></i>
+                        仪表板
+                    </a>
+                    <a href="#records" class="nav-item" data-page="records">
+                        <i class="fas fa-list"></i>
+                        工时记录
+                    </a>
+                    <a href="#settings" class="nav-item" data-page="settings">
+                        <i class="fas fa-cog"></i>
+                        设置
+                    </a>
+                </nav>
+            </div>
+            <div class="header-right">
+                <div class="status-indicator">
+                    <span class="status-dot"></span>
+                    <span>运行正常</span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- 主内容区域 -->
+    <main class="main">
+        <!-- 仪表板页面 -->
+        <div id="dashboard" class="page active">
+            <div class="page-header">
+                <h1>今日概览</h1>
+            </div>
+            
+            <!-- 统计卡片 -->
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-clock"></i>
+                    </div>
+                    <div class="stat-content">
+                        <div class="stat-value">8h 30m</div>
+                        <div class="stat-label">今日工时</div>
+                        <div class="stat-status working">🕐 正在工作</div>
+                    </div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-calendar-week"></i>
+                    </div>
+                    <div class="stat-content">
+                        <div class="stat-value">42h 15m</div>
+                        <div class="stat-label">本周工时</div>
+                        <div class="stat-status positive">📊 +5.2%</div>
+                    </div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-calendar-alt"></i>
+                    </div>
+                    <div class="stat-content">
+                        <div class="stat-value">168h 45m</div>
+                        <div class="stat-label">本月工时</div>
+                        <div class="stat-status positive">📈 +12.8%</div>
+                    </div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <div class="stat-content">
+                        <div class="stat-value">8h 15m</div>
+                        <div class="stat-label">平均工时</div>
+                        <div class="stat-status stable">📊 稳定</div>
+                    </div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-clock"></i>
+                    </div>
+                    <div class="stat-content">
+                        <div class="stat-value">25h 30m</div>
+                        <div class="stat-label">本月加班</div>
+                        <div class="stat-status warning">⚠️ 偏高</div>
+                    </div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-history"></i>
+                    </div>
+                    <div class="stat-content">
+                        <div class="stat-value">18h 45m</div>
+                        <div class="stat-label">上月加班</div>
+                        <div class="stat-status positive">� -27%</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 图表区域 -->
+            <div class="charts-grid">
+                <div class="chart-card">
+                    <h3>每日工时柱状图</h3>
+                    <div class="chart-placeholder bar-chart">
+                        <div class="bar-container">
+                            <div class="bar" style="height: 60%;" data-value="7.5h" data-hours="7.5"></div>
+                            <div class="bar overtime" style="height: 82%;" data-value="8.2h" data-hours="8.2"></div>
+                            <div class="bar" style="height: 70%;" data-value="7.8h" data-hours="7.8"></div>
+                            <div class="bar overtime" style="height: 90%;" data-value="8.5h" data-hours="8.5"></div>
+                            <div class="bar" style="height: 80%;" data-value="8.0h" data-hours="8.0"></div>
+                            <div class="bar overtime" style="height: 85%;" data-value="8.3h" data-hours="8.3"></div>
+                            <div class="bar" style="height: 65%;" data-value="7.2h" data-hours="7.2"></div>
+                        </div>
+                        <div class="chart-labels">
+                            <span>周一</span>
+                            <span>周二</span>
+                            <span>周三</span>
+                            <span>周四</span>
+                            <span>周五</span>
+                            <span>周六</span>
+                            <span>周日</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="chart-card">
+                    <h3>工时分布饼图</h3>
+                    <div class="chart-placeholder pie-chart">
+                        <div class="pie-segment" style="--percentage: 45; --color: #409EFF;"></div>
+                        <div class="pie-segment" style="--percentage: 25; --color: #67C23A;"></div>
+                        <div class="pie-segment" style="--percentage: 20; --color: #E6A23C;"></div>
+                        <div class="pie-segment" style="--percentage: 10; --color: #F56C6C;"></div>
+                    </div>
+                    <div class="pie-legend">
+                        <div class="legend-item">
+                            <span class="legend-color" style="background: #409EFF;"></span>
+                            <span>8-9小时 (45%)</span>
+                        </div>
+                        <div class="legend-item">
+                            <span class="legend-color" style="background: #67C23A;"></span>
+                            <span>7-8小时 (25%)</span>
+                        </div>
+                        <div class="legend-item">
+                            <span class="legend-color" style="background: #E6A23C;"></span>
+                            <span>9-10小时 (20%)</span>
+                        </div>
+                        <div class="legend-item">
+                            <span class="legend-color" style="background: #F56C6C;"></span>
+                            <span>其他 (10%)</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 工作模式分析 -->
+            <div class="analysis-section">
+                <h2>工作模式分析</h2>
+                <div class="analysis-grid">
+                    <div class="analysis-item">
+                        <span class="analysis-label">最常见上班时间:</span>
+                        <span class="analysis-value">09:00 (占比 68%)</span>
+                    </div>
+                    <div class="analysis-item">
+                        <span class="analysis-label">最常见下班时间:</span>
+                        <span class="analysis-value">18:30 (占比 45%)</span>
+                    </div>
+                    <div class="analysis-item">
+                        <span class="analysis-label">平均午休时长:</span>
+                        <span class="analysis-value">1小时15分钟</span>
+                    </div>
+                    <div class="analysis-item">
+                        <span class="analysis-label">加班频率:</span>
+                        <span class="analysis-value">15% (超过9小时的工作日)</span>
+                    </div>
+                    <div class="analysis-item">
+                        <span class="analysis-label">工作效率最高时段:</span>
+                        <span class="analysis-value">上午 10:00-12:00</span>
+                    </div>
+                    <div class="analysis-item">
+                        <span class="analysis-label">平均通勤时间:</span>
+                        <span class="analysis-value">45分钟</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 今日时间轴 -->
+            <div class="timeline-section">
+                <div class="section-header">
+                    <h2>今日时间轴</h2>
+                </div>
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <div class="timeline-time">09:00</div>
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-content">
+                            <div class="timeline-title">上班打卡</div>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-time">12:00</div>
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-content">
+                            <div class="timeline-title">午休开始</div>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-time">13:00</div>
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-content">
+                            <div class="timeline-title">午休结束</div>
+                        </div>
+                    </div>
+                    <div class="timeline-item current">
+                        <div class="timeline-time">15:30</div>
+                        <div class="timeline-dot current"></div>
+                        <div class="timeline-content">
+                            <div class="timeline-title">当前时间</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 工时记录页面 -->
+        <div id="records" class="page">
+            <div class="page-header">
+                <h1>工时记录管理</h1>
+                <div class="page-actions">
+                    <div class="view-toggle">
+                        <button class="btn btn-secondary view-btn active" data-view="table">
+                            <i class="fas fa-table"></i>
+                            表格视图
+                        </button>
+                        <button class="btn btn-secondary view-btn" data-view="calendar">
+                            <i class="fas fa-calendar"></i>
+                            日历视图
+                        </button>
+                    </div>
+                    <button class="btn btn-primary">
+                        <i class="fas fa-plus"></i>
+                        新增记录
+                    </button>
+                    <button class="btn btn-secondary">
+                        <i class="fas fa-download"></i>
+                        导出
+                    </button>
+                </div>
+            </div>
+
+            <!-- 筛选条件 -->
+            <div class="filter-section">
+                <div class="filter-group">
+                    <label>日期范围:</label>
+                    <input type="date" value="2024-01-01">
+                    <span>至</span>
+                    <input type="date" value="2024-01-31">
+                </div>
+                <div class="filter-group">
+                    <label>状态:</label>
+                    <select>
+                        <option>全部</option>
+                        <option>正常</option>
+                        <option>异常</option>
+                        <option>手动</option>
+                    </select>
+                </div>
+                <button class="btn btn-primary">搜索</button>
+            </div>
+
+            <!-- 表格视图 -->
+            <div class="table-view view-content active">
+                <div class="table-section">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>日期</th>
+                                <th>上班时间</th>
+                                <th>下班时间</th>
+                                <th>实际工时</th>
+                                <th>摸鱼时长</th>
+                                <th>会议时长</th>
+                                <th>状态</th>
+                                <th>操作</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>2024-01-15</td>
+                                <td>09:00:00</td>
+                                <td>18:30:00</td>
+                                <td>7h 30m</td>
+                                <td>45m</td>
+                                <td>1h 15m</td>
+                                <td><span class="status-badge normal">正常</span></td>
+                                <td>
+                                    <button class="btn-icon" title="编辑">
+                                        <i class="fas fa-edit"></i>
+                                    </button>
+                                    <button class="btn-icon" title="时间标记">
+                                        <i class="fas fa-tags"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>2024-01-14</td>
+                                <td>09:15:00</td>
+                                <td>18:00:00</td>
+                                <td>7h 00m</td>
+                                <td>30m</td>
+                                <td>45m</td>
+                                <td><span class="status-badge normal">正常</span></td>
+                                <td>
+                                    <button class="btn-icon" title="编辑">
+                                        <i class="fas fa-edit"></i>
+                                    </button>
+                                    <button class="btn-icon" title="时间标记">
+                                        <i class="fas fa-tags"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>2024-01-13</td>
+                                <td>09:00:00</td>
+                                <td>--:--:--</td>
+                                <td>--</td>
+                                <td>--</td>
+                                <td>--</td>
+                                <td><span class="status-badge abnormal">异常</span></td>
+                                <td>
+                                    <button class="btn-icon" title="编辑">
+                                        <i class="fas fa-edit"></i>
+                                    </button>
+                                    <button class="btn-icon" title="时间标记">
+                                        <i class="fas fa-tags"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>2024-01-12</td>
+                                <td>09:30:00</td>
+                                <td>19:00:00</td>
+                                <td>8h 00m</td>
+                                <td>1h 00m</td>
+                                <td>30m</td>
+                                <td><span class="status-badge manual">手动</span></td>
+                                <td>
+                                    <button class="btn-icon" title="编辑">
+                                        <i class="fas fa-edit"></i>
+                                    </button>
+                                    <button class="btn-icon" title="时间标记">
+                                        <i class="fas fa-tags"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>2024-01-11</td>
+                                <td>08:45:00</td>
+                                <td>17:30:00</td>
+                                <td>7h 15m</td>
+                                <td>20m</td>
+                                <td>1h 10m</td>
+                                <td><span class="status-badge normal">正常</span></td>
+                                <td>
+                                    <button class="btn-icon" title="编辑">
+                                        <i class="fas fa-edit"></i>
+                                    </button>
+                                    <button class="btn-icon" title="时间标记">
+                                        <i class="fas fa-tags"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- 日历视图 -->
+            <div class="calendar-view view-content">
+                <div class="calendar-header">
+                    <button class="btn btn-secondary" id="prevMonth">
+                        <i class="fas fa-chevron-left"></i>
+                    </button>
+                    <h3 id="currentMonth">2024年1月</h3>
+                    <button class="btn btn-secondary" id="nextMonth">
+                        <i class="fas fa-chevron-right"></i>
+                    </button>
+                </div>
+                <div class="calendar-grid">
+                    <div class="calendar-weekdays">
+                        <div class="weekday">周日</div>
+                        <div class="weekday">周一</div>
+                        <div class="weekday">周二</div>
+                        <div class="weekday">周三</div>
+                        <div class="weekday">周四</div>
+                        <div class="weekday">周五</div>
+                        <div class="weekday">周六</div>
+                    </div>
+                    <div class="calendar-days">
+                        <!-- 日历日期将通过JavaScript生成 -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- 分页 -->
+            <div class="pagination">
+                <button class="btn btn-secondary">上一页</button>
+                <span class="page-numbers">
+                    <span class="page-number active">1</span>
+                    <span class="page-number">2</span>
+                    <span class="page-number">3</span>
+                    <span class="page-number">4</span>
+                    <span class="page-number">5</span>
+                </span>
+                <button class="btn btn-secondary">下一页</button>
+            </div>
+        </div>
+
+
+
+        <!-- 设置页面 -->
+        <div id="settings" class="page">
+            <div class="page-header">
+                <h1>系统设置</h1>
+            </div>
+
+            <div class="settings-grid">
+                <!-- 基本设置 -->
+                <div class="settings-section">
+                    <h2>基本设置</h2>
+                    <div class="setting-item">
+                        <label>当前班次:</label>
+                        <div class="input-group">
+                            <select id="currentShift">
+                                <option value="normal">标准班次</option>
+                                <option value="early">早班</option>
+                                <option value="late">晚班</option>
+                                <option value="shift">轮班</option>
+                            </select>
+                            <button class="btn btn-secondary" onclick="showShiftConfig()">配置班次</button>
+                        </div>
+                    </div>
+                    <div class="setting-item">
+                        <label>标准工作时长:</label>
+                        <div class="input-group">
+                            <input type="number" value="8" min="1" max="24">
+                            <span>小时</span>
+                            <input type="number" value="0" min="0" max="59">
+                            <span>分钟</span>
+                        </div>
+                    </div>
+                    <div class="setting-item">
+                        <label>午休时间:</label>
+                        <div class="input-group">
+                            <input type="time" value="12:00">
+                            <span>至</span>
+                            <input type="time" value="13:00">
+                        </div>
+                    </div>
+                    <div class="setting-item">
+                        <label>提醒设置:</label>
+                        <div class="checkbox-group">
+                            <label class="checkbox">
+                                <input type="checkbox">
+                                <span>启用上班提醒</span>
+                            </label>
+                            <label class="checkbox">
+                                <input type="checkbox">
+                                <span>启用下班提醒</span>
+                            </label>
+                            <label class="checkbox">
+                                <input type="checkbox" checked>
+                                <span>启用加班提醒 (超过 9 小时)</span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 工作日历设置 -->
+                <div class="settings-section">
+                    <h2>工作日历</h2>
+                    <div class="setting-item">
+                        <label>工作日历导入:</label>
+                        <div class="button-group">
+                            <button class="btn btn-secondary" onclick="importWorkCalendar()">导入日历文件</button>
+                            <button class="btn btn-secondary" onclick="showCalendarEditor()">编辑日历</button>
+                        </div>
+                    </div>
+                    <div class="setting-item">
+                        <label>特殊工作日:</label>
+                        <div class="special-days">
+                            <div class="special-day-item">
+                                <span class="day-date">2024-02-10</span>
+                                <span class="day-type holiday">春节调休</span>
+                                <button class="btn-icon" title="删除">
+                                    <i class="fas fa-times"></i>
+                                </button>
+                            </div>
+                            <div class="special-day-item">
+                                <span class="day-date">2024-02-17</span>
+                                <span class="day-type workday">春节补班</span>
+                                <button class="btn-icon" title="删除">
+                                    <i class="fas fa-times"></i>
+                                </button>
+                            </div>
+                            <button class="btn btn-secondary add-special-day" onclick="addSpecialDay()">
+                                <i class="fas fa-plus"></i>
+                                添加特殊日期
+                            </button>
+                        </div>
+                    </div>
+                    <div class="setting-item">
+                        <label>工作制度:</label>
+                        <div class="input-group">
+                            <select>
+                                <option>标准工作制 (周一至周五)</option>
+                                <option>大小周制</option>
+                                <option>单双周制</option>
+                                <option>自定义</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 高级设置 -->
+                <div class="settings-section">
+                    <h2>高级设置</h2>
+                    <div class="setting-item">
+                        <label>数据库路径:</label>
+                        <div class="input-group">
+                            <input type="text" value="C:\Users\...\TimeTrace\data.db" readonly>
+                            <button class="btn btn-secondary">浏览</button>
+                        </div>
+                    </div>
+                    <div class="setting-item">
+                        <label>数据管理:</label>
+                        <div class="button-group">
+                            <button class="btn btn-secondary">备份数据</button>
+                            <button class="btn btn-secondary">恢复数据</button>
+                            <button class="btn btn-warning">清理数据</button>
+                        </div>
+                    </div>
+                    <div class="setting-item">
+                        <label>系统设置:</label>
+                        <div class="checkbox-group">
+                            <label class="checkbox">
+                                <input type="checkbox" checked>
+                                <span>开机自启动</span>
+                            </label>
+                            <label class="checkbox">
+                                <input type="checkbox" checked>
+                                <span>最小化到系统托盘</span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 关于 -->
+                <div class="settings-section">
+                    <h2>关于</h2>
+                    <div class="about-info">
+                        <h3>时迹 (TimeTrace) v1.0.0</h3>
+                        <p>个人工时记录软件</p>
+                        
+                        <div class="system-status">
+                            <h4>系统状态:</h4>
+                            <div class="status-item">
+                                <span class="status-icon success">✅</span>
+                                <span>事件监听: 正常</span>
+                            </div>
+                            <div class="status-item">
+                                <span class="status-icon success">✅</span>
+                                <span>数据库: 正常</span>
+                            </div>
+                            <div class="status-item">
+                                <span class="status-icon success">✅</span>
+                                <span>Web服务: 运行中 (端口: 5000)</span>
+                            </div>
+                        </div>
+                        
+                        <div class="button-group">
+                            <button class="btn btn-secondary">检查更新</button>
+                            <button class="btn btn-secondary">查看日志</button>
+                            <button class="btn btn-primary">重启服务</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="settings-actions">
+                <button class="btn btn-primary">保存设置</button>
+            </div>
+        </div>
+    </main>
+
+    <!-- 底部状态栏 -->
+    <footer class="footer">
+        <div class="footer-left">
+            <span>最后更新时间: 2024-01-15 14:30:25</span>
+        </div>
+        <div class="footer-right">
+            <span>数据库状态: 正常</span>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
