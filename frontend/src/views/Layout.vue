@@ -1,156 +1,45 @@
 <template>
-  <div class="app-wrapper" :class="classObj">
-    <!-- 侧边栏 -->
-    <div v-if="device === 'mobile' && sidebar.opened" class="drawer-bg" @click="handleClickOutside" />
-    
-    <Sidebar class="sidebar-container" />
-    
+  <div class="app-wrapper">
+    <!-- 顶部导航栏 -->
+    <AppHeader />
+
     <!-- 主内容区域 -->
-    <div class="main-container">
-      <!-- 顶部导航栏 -->
-      <div class="fixed-header">
-        <Navbar />
-      </div>
-      
-      <!-- 页面内容 -->
-      <AppMain />
-    </div>
+    <main class="main">
+      <router-view />
+    </main>
+
+    <!-- 底部状态栏 -->
+    <AppFooter />
   </div>
 </template>
 
 <script setup>
-import { computed } from 'vue'
-import { useAppStore } from '@/stores/app'
-import Sidebar from '@/components/Sidebar/index.vue'
-import Navbar from '@/components/Navbar/index.vue'
-import AppMain from '@/components/AppMain/index.vue'
-
-const appStore = useAppStore()
-
-// 计算属性
-const sidebar = computed(() => appStore.sidebar)
-const device = computed(() => appStore.device)
-
-const classObj = computed(() => {
-  return {
-    hideSidebar: !sidebar.value.opened,
-    openSidebar: sidebar.value.opened,
-    withoutAnimation: sidebar.value.withoutAnimation,
-    mobile: device.value === 'mobile'
-  }
-})
-
-// 方法
-const handleClickOutside = () => {
-  appStore.closeSidebar(false)
-}
+import AppHeader from '@/components/AppHeader/index.vue'
+import AppFooter from '@/components/AppFooter/index.vue'
 </script>
 
 <style lang="scss" scoped>
 .app-wrapper {
-  position: relative;
-  height: 100vh;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  background-color: #f5f7fa;
+  color: #303133;
+  line-height: 1.5;
+  overflow-x: hidden;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+}
+
+.main {
+  margin-top: 60px;
+  margin-bottom: 40px;
+  padding: 20px;
+  min-height: calc(100vh - 100px);
+  flex: 1;
+  max-width: 1200px;
+  margin-left: auto;
+  margin-right: auto;
   width: 100%;
-  
-  &.mobile.openSidebar {
-    position: fixed;
-    top: 0;
-  }
-}
-
-.drawer-bg {
-  background: #000;
-  opacity: 0.3;
-  width: 100%;
-  top: 0;
-  height: 100%;
-  position: absolute;
-  z-index: 999;
-}
-
-.fixed-header {
-  position: fixed;
-  top: 0;
-  right: 0;
-  z-index: 9;
-  width: calc(100% - 210px);
-  transition: width 0.28s;
-}
-
-.hideSidebar .fixed-header {
-  width: calc(100% - 54px);
-}
-
-.mobile .fixed-header {
-  width: 100%;
-}
-
-.sidebar-container {
-  transition: width 0.28s;
-  width: 210px !important;
-  background-color: #304156;
-  height: 100%;
-  position: fixed;
-  font-size: 0px;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  z-index: 1001;
-  overflow: hidden;
-}
-
-.hideSidebar .sidebar-container {
-  pointer-events: none;
-  transition-duration: 0.3s;
-  transform: translate3d(-210px, 0, 0);
-}
-
-.main-container {
-  min-height: 100%;
-  transition: margin-left 0.28s;
-  margin-left: 210px;
-  position: relative;
-}
-
-.hideSidebar .main-container {
-  margin-left: 54px;
-}
-
-.sidebar-container .horizontal-collapse-transition {
-  transition: 0s width ease-in-out, 0s padding-left ease-in-out, 0s padding-right ease-in-out;
-}
-
-.sidebar-container.collapse .horizontal-collapse-transition {
-  transition: 0.3s width ease-in-out, 0.3s padding-left ease-in-out, 0.3s padding-right ease-in-out;
-}
-
-// 移动端适配
-.mobile {
-  .main-container {
-    margin-left: 0px;
-  }
-  
-  .sidebar-container {
-    transition: transform 0.28s;
-    width: 210px !important;
-  }
-  
-  &.openSidebar {
-    position: fixed;
-    top: 0;
-  }
-  
-  &.hideSidebar .sidebar-container {
-    pointer-events: none;
-    transition-duration: 0.3s;
-    transform: translate3d(-210px, 0, 0);
-  }
-}
-
-.withoutAnimation {
-  .main-container,
-  .sidebar-container {
-    transition: none;
-  }
 }
 </style>

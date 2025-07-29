@@ -56,15 +56,6 @@ const routes = [
     ]
   },
   {
-    path: '/login',
-    name: 'Login',
-    component: () => import('@/views/Login.vue'),
-    meta: {
-      title: '登录',
-      hideInMenu: true
-    }
-  },
-  {
     path: '/:pathMatch(.*)*',
     name: 'NotFound',
     component: () => import('@/views/NotFound.vue'),
@@ -94,7 +85,7 @@ router.beforeEach((to, from, next) => {
   if (to.meta.title) {
     document.title = `${to.meta.title} - 时迹工时追踪系统`
   }
-  
+
   // TODO: 添加权限验证逻辑
   next()
 })

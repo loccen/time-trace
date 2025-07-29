@@ -1,186 +1,232 @@
 <template>
   <div class="dashboard">
-    <el-row :gutter="20">
-      <el-col :span="24">
-        <el-card class="welcome-card">
-          <template #header>
-            <div class="card-header">
-              <span>欢迎使用时迹工时追踪系统</span>
-            </div>
-          </template>
-          <div class="welcome-content">
-            <p>这是一个智能的工时追踪和管理系统，帮助您更好地管理时间和提高工作效率。</p>
-            <el-row :gutter="20" class="stats-row">
-              <el-col :span="6">
-                <div class="stat-item">
-                  <el-icon class="stat-icon"><Clock /></el-icon>
-                  <div class="stat-content">
-                    <div class="stat-value">8.5</div>
-                    <div class="stat-label">今日工时</div>
-                  </div>
-                </div>
-              </el-col>
-              <el-col :span="6">
-                <div class="stat-item">
-                  <el-icon class="stat-icon"><Calendar /></el-icon>
-                  <div class="stat-content">
-                    <div class="stat-value">42.5</div>
-                    <div class="stat-label">本周工时</div>
-                  </div>
-                </div>
-              </el-col>
-              <el-col :span="6">
-                <div class="stat-item">
-                  <el-icon class="stat-icon"><DataAnalysis /></el-icon>
-                  <div class="stat-content">
-                    <div class="stat-value">168</div>
-                    <div class="stat-label">本月工时</div>
-                  </div>
-                </div>
-              </el-col>
-              <el-col :span="6">
-                <div class="stat-item">
-                  <el-icon class="stat-icon"><TrendCharts /></el-icon>
-                  <div class="stat-content">
-                    <div class="stat-value">95%</div>
-                    <div class="stat-label">出勤率</div>
-                  </div>
-                </div>
-              </el-col>
-            </el-row>
-          </div>
-        </el-card>
-      </el-col>
-    </el-row>
+    <div class="page-header">
+      <h1>今日概览</h1>
+    </div>
 
-    <el-row :gutter="20" style="margin-top: 20px;">
-      <el-col :span="12">
-        <el-card>
-          <template #header>
-            <div class="card-header">
-              <span>快速操作</span>
-            </div>
-          </template>
-          <div class="quick-actions">
-            <el-button type="primary" @click="$router.push('/time-records')">
-              <el-icon><Clock /></el-icon>
-              工时记录
-            </el-button>
-            <el-button type="success" @click="$router.push('/statistics')">
-              <el-icon><DataAnalysis /></el-icon>
-              统计分析
-            </el-button>
-            <el-button type="info" @click="$router.push('/system-events')">
-              <el-icon><Bell /></el-icon>
-              系统事件
-            </el-button>
-            <el-button type="warning" @click="$router.push('/settings')">
-              <el-icon><Setting /></el-icon>
-              系统设置
-            </el-button>
-          </div>
-        </el-card>
-      </el-col>
-      <el-col :span="12">
-        <el-card>
-          <template #header>
-            <div class="card-header">
-              <span>系统状态</span>
-            </div>
-          </template>
-          <div class="system-status">
-            <el-descriptions :column="1" border>
-              <el-descriptions-item label="API服务">
-                <el-tag type="success">正常</el-tag>
-              </el-descriptions-item>
-              <el-descriptions-item label="数据库">
-                <el-tag type="success">连接正常</el-tag>
-              </el-descriptions-item>
-              <el-descriptions-item label="事件监听">
-                <el-tag type="warning">已禁用</el-tag>
-              </el-descriptions-item>
-              <el-descriptions-item label="系统版本">
-                <el-tag>v1.0.0</el-tag>
-              </el-descriptions-item>
-            </el-descriptions>
-          </div>
-        </el-card>
-      </el-col>
-    </el-row>
+    <!-- 统计卡片 -->
+    <div class="stats-grid">
+      <div class="stat-card">
+        <div class="stat-icon">
+          <el-icon><Clock /></el-icon>
+        </div>
+        <div class="stat-content">
+          <div class="stat-value">8h 30m</div>
+          <div class="stat-label">今日工时</div>
+          <div class="stat-status working">🕐 正在工作</div>
+        </div>
+      </div>
+
+      <div class="stat-card">
+        <div class="stat-icon">
+          <el-icon><Calendar /></el-icon>
+        </div>
+        <div class="stat-content">
+          <div class="stat-value">42h 15m</div>
+          <div class="stat-label">本周工时</div>
+          <div class="stat-status positive">📊 +5.2%</div>
+        </div>
+      </div>
+
+      <div class="stat-card">
+        <div class="stat-icon">
+          <el-icon><Calendar /></el-icon>
+        </div>
+        <div class="stat-content">
+          <div class="stat-value">168h 45m</div>
+          <div class="stat-label">本月工时</div>
+          <div class="stat-status positive">📈 +12.8%</div>
+        </div>
+      </div>
+
+      <div class="stat-card">
+        <div class="stat-icon">
+          <el-icon><TrendCharts /></el-icon>
+        </div>
+        <div class="stat-content">
+          <div class="stat-value">8h 15m</div>
+          <div class="stat-label">平均工时</div>
+          <div class="stat-status stable">📊 稳定</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 快速操作 -->
+    <div class="quick-actions">
+      <h2>快速操作</h2>
+      <div class="action-buttons">
+        <el-button type="primary" @click="$router.push('/time-records')">
+          <el-icon><Clock /></el-icon>
+          工时记录
+        </el-button>
+        <el-button type="success" @click="$router.push('/statistics')">
+          <el-icon><DataAnalysis /></el-icon>
+          统计分析
+        </el-button>
+        <el-button type="info" @click="$router.push('/system-events')">
+          <el-icon><Bell /></el-icon>
+          系统事件
+        </el-button>
+        <el-button type="warning" @click="$router.push('/settings')">
+          <el-icon><Setting /></el-icon>
+          系统设置
+        </el-button>
+      </div>
+    </div>
   </div>
 </template>
 
 <script setup>
-import { Clock, Calendar, DataAnalysis, TrendCharts, Bell, Setting } from '@element-plus/icons-vue'
+import { Clock, Calendar, TrendCharts, DataAnalysis, Bell, Setting } from '@element-plus/icons-vue'
 </script>
 
 <style lang="scss" scoped>
 .dashboard {
-  padding: 20px;
-}
-
-.welcome-card {
-  .card-header {
+  // 页面头部
+  .page-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-  }
-  
-  .welcome-content {
-    p {
-      margin-bottom: 20px;
-      color: #666;
-      font-size: 16px;
-    }
-  }
-}
+    margin-bottom: 24px;
 
-.stats-row {
-  margin-top: 20px;
-}
-
-.stat-item {
-  display: flex;
-  align-items: center;
-  padding: 20px;
-  background: #f8f9fa;
-  border-radius: 8px;
-  
-  .stat-icon {
-    font-size: 32px;
-    color: #409EFF;
-    margin-right: 15px;
-  }
-  
-  .stat-content {
-    .stat-value {
+    h1 {
       font-size: 24px;
-      font-weight: bold;
+      font-weight: 600;
       color: #303133;
-      margin-bottom: 5px;
+      margin: 0;
     }
-    
-    .stat-label {
-      font-size: 14px;
+  }
+
+  // 统计卡片网格
+  .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+    margin-bottom: 32px;
+  }
+
+  .stat-card {
+    background: #fff;
+    border-radius: 8px;
+    padding: 24px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+    border: 1px solid #e4e7ed;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .stat-icon {
+    width: 48px;
+    height: 48px;
+    background: #409eff;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    font-size: 20px;
+  }
+
+  .stat-content {
+    flex: 1;
+  }
+
+  .stat-value {
+    font-size: 28px;
+    font-weight: 600;
+    color: #303133;
+    margin-bottom: 4px;
+  }
+
+  .stat-label {
+    font-size: 14px;
+    color: #909399;
+    margin-bottom: 8px;
+  }
+
+  .stat-status {
+    font-size: 12px;
+    padding: 2px 8px;
+    border-radius: 12px;
+    background: #f0f9ff;
+    color: #409eff;
+
+    &.working {
+      background: #f0f9ff;
+      color: #409eff;
+    }
+
+    &.positive {
+      background: #f0f9ff;
+      color: #67c23a;
+    }
+
+    &.stable {
+      background: #f5f7fa;
       color: #909399;
     }
-  }
-}
 
-.quick-actions {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-  
-  .el-button {
-    flex: 1;
-    min-width: 120px;
+    &.warning {
+      background: #fdf6ec;
+      color: #e6a23c;
+    }
   }
-}
 
-.system-status {
-  .el-descriptions {
-    margin-top: 10px;
+  // 快速操作
+  .quick-actions {
+    background: #fff;
+    border-radius: 8px;
+    padding: 24px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+    border: 1px solid #e4e7ed;
+
+    h2 {
+      font-size: 18px;
+      font-weight: 600;
+      color: #303133;
+      margin: 0 0 20px 0;
+    }
+  }
+
+  .action-buttons {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+
+  // 响应式设计
+  @media (max-width: 768px) {
+    .page-header h1 {
+      font-size: 20px;
+    }
+
+    .stats-grid {
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+
+    .stat-card {
+      padding: 16px;
+      flex-direction: column;
+      text-align: center;
+      gap: 12px;
+    }
+
+    .stat-icon {
+      width: 40px;
+      height: 40px;
+      font-size: 18px;
+    }
+
+    .stat-value {
+      font-size: 24px;
+    }
+
+    .action-buttons {
+      flex-direction: column;
+    }
   }
 }
 </style>
