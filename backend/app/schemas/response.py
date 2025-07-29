@@ -1,7 +1,7 @@
 """
 API响应模式
 """
-from typing import Any, Optional, Generic, TypeVar
+from typing import Any, Optional, Generic, TypeVar, List
 from datetime import datetime
 from pydantic import BaseModel, Field
 
@@ -18,7 +18,7 @@ class ApiResponse(BaseModel, Generic[T]):
 
 class PaginatedResponse(BaseModel, Generic[T]):
     """分页响应模型"""
-    items: list[T] = Field(..., description="数据项列表")
+    items: List[T] = Field(..., description="数据项列表")
     total: int = Field(..., description="总数量")
     page: int = Field(..., description="当前页码")
     size: int = Field(..., description="每页大小")

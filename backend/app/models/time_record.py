@@ -2,7 +2,7 @@
 工时记录模型
 """
 from datetime import datetime, date, time
-from typing import Optional
+from typing import Optional, List
 from pydantic import BaseModel, Field
 
 from .base import RecordStatus, BaseTimestampModel
@@ -86,7 +86,7 @@ class WeeklyStats(BaseModel):
     total_overtime_hours: float = Field(default=0, ge=0, description="总加班小时数")
     work_days: int = Field(default=0, ge=0, description="工作天数")
     avg_daily_hours: float = Field(default=0, ge=0, description="平均每日工作小时数")
-    daily_records: list[DailyStats] = Field(default=[], description="每日记录")
+    daily_records: List[DailyStats] = Field(default=[], description="每日记录")
 
 
 class MonthlyStats(BaseModel):

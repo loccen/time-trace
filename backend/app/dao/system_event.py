@@ -266,7 +266,8 @@ class SystemEventDAO(BaseDAO[SystemEvent], TimestampMixin):
             event_source=row['event_source'],
             details=row['details'],
             processed=bool(row['processed']),
-            created_at=datetime.fromisoformat(row['created_at']) if row['created_at'] else None
+            created_at=datetime.fromisoformat(row['created_at']) if row['created_at'] else None,
+            updated_at=datetime.fromisoformat(row['updated_at']) if row.get('updated_at') else None
         )
 
 

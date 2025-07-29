@@ -250,15 +250,26 @@ async def get_system_config():
         raise HTTPException(status_code=500, detail="获取系统配置失败")
 
 
+# 注册API路由
+def setup_routes():
+    """设置API路由"""
+    from app.api import api_v1_router
+
+    # 注册v1版本API
+    app.include_router(api_v1_router)
+    logger.info("API路由注册完成")
+
+
+# 在应用创建时就设置中间件和路由
+setup_middleware()
+setup_routes()
+
 # 启动事件
 @app.on_event("startup")
 async def startup_event():
     """应用启动事件"""
     logger.info("时迹API服务启动")
-    
-    # 设置中间件
-    setup_middleware()
-    
+
     # 初始化数据库
     try:
         from scripts.init_db import init_database
@@ -266,20 +277,21 @@ async def startup_event():
         logger.info("数据库初始化完成")
     except Exception as e:
         logger.error(f"数据库初始化失败: {e}")
-    
-    # 启动事件服务
-    try:
-        from app.listeners import event_manager, create_platform_listener
-        
-        # 创建并注册平台监听器
-        platform_listener = create_platform_listener()
-        event_manager.register_listener(platform_listener)
-        
-        # 启动事件管理器
-        event_manager.start_all()
-        logger.info("事件服务启动完成")
-    except Exception as e:
-        logger.error(f"事件服务启动失败: {e}")
+
+    # 启动事件服务（暂时禁用）
+    # try:
+    #     from app.listeners import event_manager, create_platform_listener
+    #
+    #     # 创建并注册平台监听器
+    #     platform_listener = create_platform_listener()
+    #     event_manager.register_listener(platform_listener)
+    #
+    #     # 启动事件管理器
+    #     event_manager.start_all()
+    #     logger.info("事件服务启动完成")
+    # except Exception as e:
+    #     logger.error(f"事件服务启动失败: {e}")
+    logger.info("事件服务已禁用（开发模式）")
 
 
 # 关闭事件
@@ -287,14 +299,15 @@ async def startup_event():
 async def shutdown_event():
     """应用关闭事件"""
     logger.info("时迹API服务关闭")
-    
-    # 停止事件服务
-    try:
-        from app.listeners import event_manager
-        event_manager.stop_all()
-        logger.info("事件服务已停止")
-    except Exception as e:
-        logger.error(f"停止事件服务失败: {e}")
+
+    # 停止事件服务（暂时禁用）
+    # try:
+    #     from app.listeners import event_manager
+    #     event_manager.stop_all()
+    #     logger.info("事件服务已停止")
+    # except Exception as e:
+    #     logger.error(f"停止事件服务失败: {e}")
+    logger.info("事件服务已禁用（开发模式）")
 
 
 # 自定义OpenAPI文档
