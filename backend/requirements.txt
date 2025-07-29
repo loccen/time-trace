@@ -3,7 +3,7 @@ fastapi==0.104.1
 uvicorn[standard]==0.24.0
 
 # 数据库
-sqlite3  # Python内置模块
+# sqlite3 是Python内置模块，无需安装
 
 # 系统集成
 pywin32==306; sys_platform == "win32"
