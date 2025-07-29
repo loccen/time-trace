@@ -1,0 +1,38 @@
+# Web框架
+fastapi==0.104.1
+uvicorn[standard]==0.24.0
+
+# 数据库
+sqlite3  # Python内置模块
+
+# 系统集成
+pywin32==306; sys_platform == "win32"
+pyobjc-framework-Cocoa==10.0; sys_platform == "darwin"
+pyobjc-framework-IOKit==10.0; sys_platform == "darwin"
+python-dbus==1.3.2; sys_platform == "linux"
+
+# 数据处理
+pydantic==2.5.0
+python-dateutil==2.8.2
+
+# 任务调度
+APScheduler==3.10.4
+
+# 日志
+loguru==0.7.2
+
+# 配置管理
+python-dotenv==1.0.0
+
+# 打包
+pyinstaller==6.2.0
+
+# 开发工具
+pytest==7.4.3
+pytest-cov==4.1.0
+black==23.11.0
+flake8==6.1.0
+
+# 其他工具
+requests==2.31.0
+psutil==5.9.6
