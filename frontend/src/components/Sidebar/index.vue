@@ -47,7 +47,7 @@ const activeMenu = computed(() => route.path)
 const routes = computed(() => [
   {
     path: '/dashboard',
-    meta: { title: '仪表板', icon: 'Dashboard' },
+    meta: { title: '仪表板', icon: 'DataBoard' },
     name: 'Dashboard'
   },
   {

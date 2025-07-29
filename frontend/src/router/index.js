@@ -14,7 +14,7 @@ const routes = [
         component: () => import('@/views/Dashboard.vue'),
         meta: {
           title: '仪表板',
-          icon: 'Dashboard'
+          icon: 'DataBoard'
         }
       },
       {

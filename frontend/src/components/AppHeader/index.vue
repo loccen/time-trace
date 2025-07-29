@@ -12,7 +12,7 @@
             class="nav-item" 
             :class="{ active: $route.path === '/dashboard' }"
           >
-            <el-icon><Dashboard /></el-icon>
+            <el-icon><DataBoard /></el-icon>
             仪表板
           </router-link>
           <router-link 
@@ -44,7 +44,7 @@
 </template>
 
 <script setup>
-import { Clock, Dashboard, List, Setting } from '@element-plus/icons-vue'
+import { Clock, DataBoard, List, Setting } from '@element-plus/icons-vue'
 </script>
 
 <style lang="scss" scoped>

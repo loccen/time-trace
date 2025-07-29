@@ -1,7 +1,8 @@
 """
 工时记录模型
 """
-from datetime import datetime, date, time
+from datetime import datetime, date
+from datetime import time as time_type
 from typing import Optional, List
 from pydantic import BaseModel, Field
 
@@ -73,8 +74,8 @@ class DailyStats(BaseModel):
     work_hours: float = Field(default=0, ge=0, description="工作小时数")
     overtime_hours: float = Field(default=0, ge=0, description="加班小时数")
     break_hours: float = Field(default=0, ge=0, description="休息小时数")
-    clock_in_time: Optional[time] = Field(None, description="上班时间")
-    clock_out_time: Optional[time] = Field(None, description="下班时间")
+    clock_in_time: Optional[time_type] = Field(None, description="上班时间")
+    clock_out_time: Optional[time_type] = Field(None, description="下班时间")
     status: Optional[RecordStatus] = Field(None, description="状态")
 
 
