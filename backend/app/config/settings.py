@@ -80,7 +80,7 @@ class Settings:
                 "port": 8000
             },
             "database": {
-                "url": "sqlite:///time_trace.db",
+                "url": "sqlite:///data/time_trace.db",
                 "pool_size": 10,
                 "max_overflow": 20,
                 "pool_timeout": 30

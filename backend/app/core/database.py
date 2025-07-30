@@ -1,6 +1,7 @@
 """
 数据库连接和管理
 """
+import os
 import sqlite3
 import threading
 import time
@@ -158,10 +159,18 @@ class DatabaseManager:
     
     def _get_db_path(self) -> str:
         """获取数据库路径"""
-        db_url = get_config("database.url", "sqlite:///time_trace.db")
+        db_url = get_config("database.url", "sqlite:///data/time_trace.db")
         if db_url.startswith("sqlite:///"):
-            return db_url[10:]  # 移除 "sqlite:///" 前缀
-        return "time_trace.db"
+            db_path = db_url[10:]  # 移除 "sqlite:///" 前缀
+
+            # 确保数据库目录存在
+            db_dir = os.path.dirname(db_path)
+            if db_dir and not os.path.exists(db_dir):
+                os.makedirs(db_dir, exist_ok=True)
+                logger.info(f"创建数据库目录: {db_dir}")
+
+            return db_path
+        return "data/time_trace.db"
     
     def _initialize_pool(self):
         """初始化连接池"""
