@@ -1,0 +1,201 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "🚀 启动前端开发服务器 (Vue + Vite)",
+      "type": "node-terminal",
+      "request": "launch",
+      "command": "npm run dev",
+      "cwd": "${workspaceFolder}/frontend",
+      "group": "frontend",
+      "presentation": {
+        "echo": true,
+        "reveal": "always",
+        "focus": false,
+        "panel": "new",
+        "showReuseMessage": true,
+        "clear": false,
+        "group": "frontend"
+      },
+      "problemMatcher": [],
+      "dependsOrder": "sequence",
+      "dependsOn": "检查前端依赖"
+    },
+    {
+      "name": "🐍 启动后端API服务器 (FastAPI)",
+      "type": "python",
+      "request": "launch",
+      "program": "${workspaceFolder}/backend/run.py",
+      "cwd": "${workspaceFolder}/backend",
+      "console": "integratedTerminal",
+      "env": {
+        "DEBUG": "true",
+        "HOST": "127.0.0.1",
+        "PORT": "8000",
+        "LOG_LEVEL": "INFO",
+        "PYTHONPATH": "${workspaceFolder}/backend"
+      },
+      "group": "backend",
+      "presentation": {
+        "echo": true,
+        "reveal": "always",
+        "focus": false,
+        "panel": "new",
+        "showReuseMessage": true,
+        "clear": false,
+        "group": "backend"
+      },
+      "dependsOrder": "sequence",
+      "dependsOn": "检查后端依赖"
+    },
+    {
+      "name": "🚀 启动后端开发服务器 (优化版)",
+      "type": "python",
+      "request": "launch",
+      "program": "${workspaceFolder}/backend/dev_start.py",
+      "cwd": "${workspaceFolder}/backend",
+      "console": "integratedTerminal",
+      "env": {
+        "DEBUG": "true",
+        "HOST": "127.0.0.1",
+        "PORT": "8000",
+        "LOG_LEVEL": "INFO",
+        "PYTHONPATH": "${workspaceFolder}/backend"
+      },
+      "group": "backend",
+      "presentation": {
+        "echo": true,
+        "reveal": "always",
+        "focus": false,
+        "panel": "new",
+        "showReuseMessage": true,
+        "clear": false,
+        "group": "backend"
+      },
+      "dependsOrder": "sequence",
+      "dependsOn": "检查后端依赖"
+    },
+    {
+      "name": "🐍 启动后端API服务器 (简化版)",
+      "type": "python",
+      "request": "launch",
+      "program": "${workspaceFolder}/backend/simple_start.py",
+      "cwd": "${workspaceFolder}/backend",
+      "console": "integratedTerminal",
+      "env": {
+        "PYTHONPATH": "${workspaceFolder}/backend"
+      },
+      "group": "backend",
+      "presentation": {
+        "echo": true,
+        "reveal": "always",
+        "focus": false,
+        "panel": "new",
+        "showReuseMessage": true,
+        "clear": false,
+        "group": "backend"
+      }
+    },
+    {
+      "name": "🔧 启动后端调试服务器",
+      "type": "python",
+      "request": "launch",
+      "program": "${workspaceFolder}/backend/debug_main.py",
+      "cwd": "${workspaceFolder}/backend",
+      "console": "integratedTerminal",
+      "env": {
+        "PYTHONPATH": "${workspaceFolder}/backend"
+      },
+      "group": "backend",
+      "presentation": {
+        "echo": true,
+        "reveal": "always",
+        "focus": false,
+        "panel": "new",
+        "showReuseMessage": true,
+        "clear": false,
+        "group": "backend"
+      }
+    },
+    {
+      "name": "🧪 运行后端测试",
+      "type": "python",
+      "request": "launch",
+      "program": "${workspaceFolder}/backend/test_api.py",
+      "cwd": "${workspaceFolder}/backend",
+      "console": "integratedTerminal",
+      "env": {
+        "PYTHONPATH": "${workspaceFolder}/backend"
+      },
+      "group": "test"
+    },
+    {
+      "name": "🧪 运行前端测试",
+      "type": "node-terminal",
+      "request": "launch",
+      "command": "npm run test",
+      "cwd": "${workspaceFolder}/frontend",
+      "group": "test",
+      "presentation": {
+        "echo": true,
+        "reveal": "always",
+        "focus": false,
+        "panel": "new"
+      }
+    }
+  ],
+  "compounds": [
+    {
+      "name": "🌟 一键启动完整开发环境",
+      "configurations": [
+        "🚀 启动后端开发服务器 (优化版)",
+        "🚀 启动前端开发服务器 (Vue + Vite)"
+      ],
+      "stopAll": true,
+      "presentation": {
+        "hidden": false,
+        "group": "fullstack",
+        "order": 1
+      }
+    },
+    {
+      "name": "🌟 一键启动 (标准版)",
+      "configurations": [
+        "🐍 启动后端API服务器 (FastAPI)",
+        "🚀 启动前端开发服务器 (Vue + Vite)"
+      ],
+      "stopAll": true,
+      "presentation": {
+        "hidden": false,
+        "group": "fullstack",
+        "order": 2
+      }
+    },
+    {
+      "name": "🌟 一键启动 (简化版)",
+      "configurations": [
+        "🐍 启动后端API服务器 (简化版)",
+        "🚀 启动前端开发服务器 (Vue + Vite)"
+      ],
+      "stopAll": true,
+      "presentation": {
+        "hidden": false,
+        "group": "fullstack",
+        "order": 2
+      }
+    },
+    {
+      "name": "🧪 运行所有测试",
+      "configurations": [
+        "🧪 运行后端测试",
+        "🧪 运行前端测试"
+      ],
+      "stopAll": true,
+      "presentation": {
+        "hidden": false,
+        "group": "test",
+        "order": 1
+      }
+    }
+  ]
+}

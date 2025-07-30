@@ -1,0 +1,50 @@
+{
+  "recommendations": [
+    // Python 开发
+    "ms-python.python",
+    "ms-python.flake8", 
+    "ms-python.black-formatter",
+    "ms-python.pylint",
+    
+    // Vue.js 开发
+    "Vue.volar",
+    "Vue.vscode-typescript-vue-plugin",
+    
+    // 前端工具
+    "esbenp.prettier-vscode",
+    "dbaeumer.vscode-eslint",
+    "bradlc.vscode-tailwindcss",
+    "formulahendry.auto-rename-tag",
+    "christian-kohler.path-intellisense",
+    
+    // 通用工具
+    "ms-vscode.vscode-json",
+    "redhat.vscode-yaml",
+    "ms-vscode.vscode-typescript-next",
+    
+    // Git 工具
+    "eamodio.gitlens",
+    "mhutchie.git-graph",
+    
+    // 调试和测试
+    "ms-vscode.test-adapter-converter",
+    "hbenl.vscode-test-explorer",
+    
+    // 代码质量
+    "streetsidesoftware.code-spell-checker",
+    "ms-vscode.vscode-todo-highlight",
+    
+    // 主题和图标
+    "PKief.material-icon-theme",
+    "zhuangtongfa.Material-theme",
+    
+    // 实用工具
+    "ms-vscode.powershell",
+    "ms-vscode-remote.remote-wsl",
+    "ms-vscode.live-server"
+  ],
+  "unwantedRecommendations": [
+    "ms-vscode.vscode-typescript",
+    "hookyqr.beautify"
+  ]
+}

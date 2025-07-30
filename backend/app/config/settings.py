@@ -123,12 +123,18 @@ class Settings:
             },
             "logging": {
                 "level": "INFO",
+                "console_level": "INFO",
+                "file_level": "DEBUG",
                 "format": "%(asctime)s - %(name)s - %(levelname)s - %(message)s",
+                "console_format": "%(asctime)s - %(name)s - %(colored_levelname)s - [%(caller_info)s] - %(message)s",
+                "file_format": "%(asctime)s - %(name)s - %(levelname)s - [%(caller_info)s] - %(message)s",
                 "file_enabled": True,
+                "console_enabled": True,
                 "file_path": "logs/app.log",
                 "file_max_size": "10MB",
                 "file_backup_count": 5,
-                "console_enabled": True
+                "show_caller_info": True,
+                "colored_console": True
             }
         }
     
