@@ -73,6 +73,7 @@ yarn-error.log*
 frontend/dist/
 frontend/.temp/
 frontend/.cache/
+frontend/*.d.ts
 
 # Backend static files
 backend/static/

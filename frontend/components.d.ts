@@ -12,7 +12,14 @@ declare module 'vue' {
     AppMain: typeof import('./src/components/AppMain/index.vue')['default']
     Breadcrumb: typeof import('./src/components/Breadcrumb/index.vue')['default']
     ElButton: typeof import('element-plus/es')['ElButton']
+    ElDatePicker: typeof import('element-plus/es')['ElDatePicker']
     ElIcon: typeof import('element-plus/es')['ElIcon']
+    ElOption: typeof import('element-plus/es')['ElOption']
+    ElPagination: typeof import('element-plus/es')['ElPagination']
+    ElSelect: typeof import('element-plus/es')['ElSelect']
+    ElTable: typeof import('element-plus/es')['ElTable']
+    ElTableColumn: typeof import('element-plus/es')['ElTableColumn']
+    ElTag: typeof import('element-plus/es')['ElTag']
     Hamburger: typeof import('./src/components/Hamburger/index.vue')['default']
     HeaderSearch: typeof import('./src/components/HeaderSearch/index.vue')['default']
     Link: typeof import('./src/components/Sidebar/Link.vue')['default']
@@ -23,5 +30,8 @@ declare module 'vue' {
     Sidebar: typeof import('./src/components/Sidebar/index.vue')['default']
     SidebarItem: typeof import('./src/components/Sidebar/SidebarItem.vue')['default']
     SizeSelect: typeof import('./src/components/SizeSelect/index.vue')['default']
+  }
+  export interface ComponentCustomProperties {
+    vLoading: typeof import('element-plus/es')['ElLoadingDirective']
   }
 }
